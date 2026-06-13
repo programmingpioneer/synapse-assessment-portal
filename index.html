@@ -93,14 +93,19 @@
             </section>
 
             <section id="quiz-screen" class="quiz-card hidden">
+                <!-- ⬇️ REPLACED HEADER WITH READ ALOUD BUTTON ⬇️ -->
                 <header class="quiz-header">
                     <div class="question-tracker">
-                        Evaluation Item: <span id="current-question-num" class="text-accent">1</span>/5
+                        Module Status: <span id="current-question-num" class="text-accent">1</span>/5
                     </div>
+                    <button id="read-aloud-btn" class="btn-icon" title="Listen to Question">
+                        🔊 Read Aloud
+                    </button>
                     <div class="timer-badge">
                         ⏱️ <span id="time-left">15</span>s
                     </div>
                 </header>
+                <!-- ⬆️ REPLACED HEADER ENDS ⬆️ -->
 
                 <div class="progress-bar-container">
                     <div id="timer-progress" class="progress-bar"></div>

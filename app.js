@@ -1,9 +1,8 @@
 // ==========================================
 // 1. DYNAMIC STATE MATRIX
 // ==========================================
-// Ab koi hardcoded array nahi. Sab kuch live internet se aayega.
 const state = {
-    assignmentCount: 1,   // Track karega kitne assignments de chuka hai
+    assignmentCount: 1,
     currentQuestionIndex: 0,
     score: 0,
     timeLeft: 15,
@@ -11,11 +10,55 @@ const state = {
     startTime: null,
     selectedAnswer: null,
     history: [],
-    activeQuestions: []   // API ka live data yahan store hoga
+    activeQuestions: []
 };
 
 // ==========================================
-// 2. DOM CACHING (The Arms & Legs)
+// 2. SYNTHETIC AUDIO ENGINE (No MP3s Allowed)
+// ==========================================
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playTone(frequency, type, duration, volume = 0.1) {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+    
+    gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + duration);
+}
+
+const AudioFX = {
+    tick: () => playTone(800, 'sine', 0.1, 0.05),
+    correct: () => {
+        playTone(600, 'sine', 0.1, 0.1);
+        setTimeout(() => playTone(800, 'sine', 0.2, 0.15), 100);
+    },
+    wrong: () => playTone(200, 'sawtooth', 0.3, 0.1)
+};
+
+// ==========================================
+// 3. TEXT-TO-SPEECH ENGINE
+// ==========================================
+function speakText(text) {
+    window.speechSynthesis.cancel(); // Stop any ongoing speech
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-GB'; // Traditional British accent for professional clarity
+    utterance.rate = 1.05;    // Slight speed up
+    utterance.pitch = 1;
+    window.speechSynthesis.speak(utterance);
+}
+
+// ==========================================
+// 4. DOM CACHING
 // ==========================================
 const elements = {
     authModal: document.getElementById('auth-modal'),
@@ -23,52 +66,43 @@ const elements = {
     quizScreen: document.getElementById('quiz-screen'),
     resultScreen: document.getElementById('result-screen'),
     profileSidebar: document.getElementById('profile-sidebar'),
-    
     authForm: document.getElementById('auth-form'),
     userNameInput: document.getElementById('user-fullname'),
     userEmailInput: document.getElementById('user-email'),
-    
     sidebarName: document.getElementById('sidebar-name'),
     sidebarEmail: document.getElementById('sidebar-email'),
     avatarInitials: document.getElementById('avatar-initials'),
     assignmentTitle: document.getElementById('assignment-title'),
     metaSubject: document.getElementById('meta-subject'),
-    
     startBtn: document.getElementById('start-btn'),
     nextBtn: document.getElementById('next-btn'),
     nextTaskBtn: document.getElementById('next-task-btn'),
     restartBtn: document.getElementById('restart-btn'),
-    
     questionText: document.getElementById('question-text'),
     optionsContainer: document.getElementById('options-container'),
     currentQuestionNum: document.getElementById('current-question-num'),
     timeLeftDisplay: document.getElementById('time-left'),
     timerProgress: document.getElementById('timer-progress'),
-    
     finalScoreDisplay: document.getElementById('final-score'),
     finalPercentageDisplay: document.getElementById('final-percentage'),
     performanceFeedback: document.getElementById('performance-feedback'),
-    
     statAttempts: document.getElementById('stat-attempts'),
     statHigh: document.getElementById('stat-high'),
     chartPath: document.getElementById('chart-path'),
     chartDots: document.getElementById('chart-dots'),
-    chartPlaceholder: document.getElementById('chart-placeholder')
+    chartPlaceholder: document.getElementById('chart-placeholder'),
+    readAloudBtn: document.getElementById('read-aloud-btn') // New Button Cached
 };
 
 // ==========================================
-// 3. UTILITY: HTML DECODER
+// 5. UTILITY & INIT
 // ==========================================
-// APIs aksar symbols ko encode kar deti hain (jaise &quot; for "). Yeh unko clean karta hai.
 function decodeHTML(html) {
     const txt = document.createElement("textarea");
     txt.innerHTML = html;
     return txt.value;
 }
 
-// ==========================================
-// 4. PORTAL INITIALIZATION
-// ==========================================
 elements.authForm.addEventListener('submit', function() {
     const name = elements.userNameInput.value.trim();
     const email = elements.userEmailInput.value.trim();
@@ -81,7 +115,6 @@ function initPortal(name, email) {
     elements.sidebarEmail.textContent = email;
     const initials = name.split(" ").map(n => n[0]).join("").substring(0, 2);
     elements.avatarInitials.textContent = initials;
-    
     elements.authModal.classList.add('hidden');
     updateAnalytics();
     setupAssignmentMeta();
@@ -95,25 +128,21 @@ function setupAssignmentMeta() {
 }
 
 // ==========================================
-// 5. ASYNC API FETCH ENGINE (THE MAGIC)
+// 6. ASYNC API FETCH ENGINE
 // ==========================================
 elements.startBtn.addEventListener('click', async () => {
-    // Button ko loading state mein daalo taake user spam click na kare
+    if (audioCtx.state === 'suspended') audioCtx.resume(); // Unlock audio context on first interaction
     elements.startBtn.textContent = "Fetching Live Data...";
     elements.startBtn.disabled = true;
 
     try {
-        // Open Trivia Database se 5 random Computer Science (Category 18) questions mangwao
         const response = await fetch('https://opentdb.com/api.php?amount=5&category=18&type=multiple');
         const data = await response.json();
 
-        // Data ko apne pure frontend format mein map karo
         state.activeQuestions = data.results.map(q => {
             const options = [...q.incorrect_answers];
-            // Sahi answer ko randomly kisi bhi index par ghusa do (0 se 3 ke beech)
             const correctIndex = Math.floor(Math.random() * 4);
             options.splice(correctIndex, 0, q.correct_answer);
-            
             return {
                 question: decodeHTML(q.question),
                 options: options.map(decodeHTML),
@@ -121,7 +150,6 @@ elements.startBtn.addEventListener('click', async () => {
             };
         });
 
-        // Data aagaya, ab Engine start karo
         elements.startScreen.classList.add('hidden');
         elements.quizScreen.classList.remove('hidden');
         state.currentQuestionIndex = 0;
@@ -129,16 +157,16 @@ elements.startBtn.addEventListener('click', async () => {
         loadQuestion();
 
     } catch (error) {
-        console.error("API Error:", error);
         elements.startBtn.textContent = "Network Error. Try Again ⚡";
         elements.startBtn.disabled = false;
     }
 });
 
 // ==========================================
-// 6. CORE QUIZ ENGINE
+// 7. CORE QUIZ ENGINE
 // ==========================================
 function loadQuestion() {
+    window.speechSynthesis.cancel(); // Stop talking if moving to new question
     const currentData = state.activeQuestions[state.currentQuestionIndex];
     
     elements.currentQuestionNum.textContent = state.currentQuestionIndex + 1;
@@ -169,6 +197,14 @@ function loadQuestion() {
     startIntervalTimer();
 }
 
+// Read Aloud Event Listener
+elements.readAloudBtn.addEventListener('click', () => {
+    const currentData = state.activeQuestions[state.currentQuestionIndex];
+    // Speak question first, then pause, then read options
+    const fullText = `${currentData.question}... Options are: A... ${currentData.options[0]}... B... ${currentData.options[1]}... C... ${currentData.options[2]}... D... ${currentData.options[3]}`;
+    speakText(fullText);
+});
+
 function selectAnswer(selectedIndex) {
     const allOptions = elements.optionsContainer.children;
     for (let i = 0; i < allOptions.length; i++) {
@@ -184,12 +220,15 @@ elements.nextBtn.addEventListener('click', () => {
 });
 
 // ==========================================
-// 7. PRECISION DRIFT-FREE TIMER
+// 8. PRECISION DRIFT-FREE TIMER WITH AUDIO
 // ==========================================
+let lastTickSecond = 15;
+
 function startIntervalTimer() {
     if(state.timerId) clearInterval(state.timerId);
     
     state.timeLeft = 15;
+    lastTickSecond = 15;
     state.startTime = Date.now(); 
     
     elements.timeLeftDisplay.textContent = state.timeLeft;
@@ -199,26 +238,38 @@ function startIntervalTimer() {
         const elapsedSeconds = Math.floor((Date.now() - state.startTime) / 1000);
         state.timeLeft = 15 - elapsedSeconds;
 
+        // Audio Tick Engine: Play tick sound during last 5 seconds
+        if (state.timeLeft <= 5 && state.timeLeft > 0 && state.timeLeft !== lastTickSecond) {
+            AudioFX.tick();
+            lastTickSecond = state.timeLeft;
+        }
+
         if (state.timeLeft <= 0) {
             state.timeLeft = 0;
             elements.timeLeftDisplay.textContent = "0";
             elements.timerProgress.style.width = "0%";
             clearInterval(state.timerId);
-            evaluateAndProgress();
+            evaluateAndProgress(); // Auto-submit
         } else {
             elements.timeLeftDisplay.textContent = state.timeLeft;
             const percentageWidth = (state.timeLeft / 15) * 100;
             elements.timerProgress.style.width = `${percentageWidth}%`;
         }
-    }, 200); 
+    }, 100); // 100ms for higher precision
 }
 
 function evaluateAndProgress() {
     if(state.timerId) clearInterval(state.timerId);
+    window.speechSynthesis.cancel(); // Mute if user hits next early
 
     const currentData = state.activeQuestions[state.currentQuestionIndex];
+    
+    // Check Accuracy & Play Sound
     if (state.selectedAnswer === currentData.correctAnswer) {
         state.score++;
+        AudioFX.correct(); // Play success chime
+    } else {
+        AudioFX.wrong(); // Play error thud
     }
     
     state.currentQuestionIndex++;
@@ -226,18 +277,17 @@ function evaluateAndProgress() {
     elements.nextBtn.classList.add('hidden');
     
     if (state.currentQuestionIndex < state.activeQuestions.length) {
-        loadQuestion();
+        // Small delay to let sound play before switching DOM
+        setTimeout(loadQuestion, 400);
     } else {
-        endQuiz();
+        setTimeout(endQuiz, 400);
     }
 }
 
 // ==========================================
-// 8. RESULT & DYNAMIC ANALYTICS
+// 9. RESULT & DYNAMIC ANALYTICS
 // ==========================================
 function endQuiz() {
-    if(state.timerId) clearInterval(state.timerId);
-    
     elements.quizScreen.classList.add('hidden');
     elements.resultScreen.classList.remove('hidden');
     
@@ -254,65 +304,51 @@ function endQuiz() {
     state.history.push({ scorePercentage: pct });
     updateAnalytics();
     
-    // Engine always unlocks the next assignment now! Infinite loop!
     elements.nextTaskBtn.classList.remove('hidden');
 }
 
 function updateAnalytics() {
     const total = state.history.length;
     elements.statAttempts.textContent = total;
-    
     if (total === 0) {
         elements.statHigh.textContent = "0%";
         elements.chartPlaceholder.classList.remove('hidden');
         return;
     }
-    
     const highest = Math.max(...state.history.map(item => item.scorePercentage));
     elements.statHigh.textContent = highest + "%";
     elements.chartPlaceholder.classList.add('hidden');
     
-    const paddingLeft = 20;
-    const paddingRight = 280;
-    const chartHeight = 120;
-    
+    const paddingLeft = 20, paddingRight = 280, chartHeight = 120;
     let pathData = "";
     elements.chartDots.innerHTML = "";
     
     state.history.forEach((attempt, index) => {
         const x = total === 1 ? 150 : paddingLeft + (index / (total - 1)) * (paddingRight - paddingLeft);
         const y = 135 - (attempt.scorePercentage / 100) * chartHeight;
-        
         if (index === 0) pathData += `M ${x} ${y}`;
         else pathData += ` L ${x} ${y}`;
         
         const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        circle.setAttribute("cx", x);
-        circle.setAttribute("cy", y);
-        circle.setAttribute("r", 5);
+        circle.setAttribute("cx", x); circle.setAttribute("cy", y); circle.setAttribute("r", 5);
         circle.setAttribute("class", "chart-dot");
-        
         elements.chartDots.appendChild(circle);
     });
-    
     elements.chartPath.setAttribute("d", pathData);
 }
 
-// Next task router hook - Triggers infinite progression
 elements.nextTaskBtn.addEventListener('click', () => {
-    state.assignmentCount++; // Naya module number
+    state.assignmentCount++;
     elements.resultScreen.classList.add('hidden');
     elements.startScreen.classList.remove('hidden');
     setupAssignmentMeta();
 });
 
-// Restart Tracking
 elements.restartBtn.addEventListener('click', () => {
     elements.resultScreen.classList.add('hidden');
     elements.startScreen.classList.remove('hidden');
 });
 
-// Volatile Refresh Reset
 window.addEventListener('DOMContentLoaded', () => {
     state.history = [];
     state.assignmentCount = 1;
