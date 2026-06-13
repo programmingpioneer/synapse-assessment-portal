@@ -49,10 +49,10 @@ const AudioFX = {
 // 3. TEXT-TO-SPEECH ENGINE
 // ==========================================
 function speakText(text) {
-    window.speechSynthesis.cancel(); // Stop any ongoing speech
+    window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-GB'; // Traditional British accent for professional clarity
-    utterance.rate = 1.05;    // Slight speed up
+    utterance.lang = 'en-GB';
+    utterance.rate = 1.05;
     utterance.pitch = 1;
     window.speechSynthesis.speak(utterance);
 }
@@ -91,7 +91,7 @@ const elements = {
     chartPath: document.getElementById('chart-path'),
     chartDots: document.getElementById('chart-dots'),
     chartPlaceholder: document.getElementById('chart-placeholder'),
-    readAloudBtn: document.getElementById('read-aloud-btn') // New Button Cached
+    readAloudBtn: document.getElementById('read-aloud-btn')
 };
 
 // ==========================================
@@ -131,7 +131,7 @@ function setupAssignmentMeta() {
 // 6. ASYNC API FETCH ENGINE
 // ==========================================
 elements.startBtn.addEventListener('click', async () => {
-    if (audioCtx.state === 'suspended') audioCtx.resume(); // Unlock audio context on first interaction
+    if (audioCtx.state === 'suspended') audioCtx.resume();
     elements.startBtn.textContent = "Fetching Live Data...";
     elements.startBtn.disabled = true;
 
@@ -166,7 +166,7 @@ elements.startBtn.addEventListener('click', async () => {
 // 7. CORE QUIZ ENGINE
 // ==========================================
 function loadQuestion() {
-    window.speechSynthesis.cancel(); // Stop talking if moving to new question
+    window.speechSynthesis.cancel();
     const currentData = state.activeQuestions[state.currentQuestionIndex];
     
     elements.currentQuestionNum.textContent = state.currentQuestionIndex + 1;
@@ -200,7 +200,6 @@ function loadQuestion() {
 // Read Aloud Event Listener
 elements.readAloudBtn.addEventListener('click', () => {
     const currentData = state.activeQuestions[state.currentQuestionIndex];
-    // Speak question first, then pause, then read options
     const fullText = `${currentData.question}... Options are: A... ${currentData.options[0]}... B... ${currentData.options[1]}... C... ${currentData.options[2]}... D... ${currentData.options[3]}`;
     speakText(fullText);
 });
@@ -238,7 +237,6 @@ function startIntervalTimer() {
         const elapsedSeconds = Math.floor((Date.now() - state.startTime) / 1000);
         state.timeLeft = 15 - elapsedSeconds;
 
-        // Audio Tick Engine: Play tick sound during last 5 seconds
         if (state.timeLeft <= 5 && state.timeLeft > 0 && state.timeLeft !== lastTickSecond) {
             AudioFX.tick();
             lastTickSecond = state.timeLeft;
@@ -249,27 +247,26 @@ function startIntervalTimer() {
             elements.timeLeftDisplay.textContent = "0";
             elements.timerProgress.style.width = "0%";
             clearInterval(state.timerId);
-            evaluateAndProgress(); // Auto-submit
+            evaluateAndProgress();
         } else {
             elements.timeLeftDisplay.textContent = state.timeLeft;
             const percentageWidth = (state.timeLeft / 15) * 100;
             elements.timerProgress.style.width = `${percentageWidth}%`;
         }
-    }, 100); // 100ms for higher precision
+    }, 100);
 }
 
 function evaluateAndProgress() {
     if(state.timerId) clearInterval(state.timerId);
-    window.speechSynthesis.cancel(); // Mute if user hits next early
+    window.speechSynthesis.cancel();
 
     const currentData = state.activeQuestions[state.currentQuestionIndex];
     
-    // Check Accuracy & Play Sound
     if (state.selectedAnswer === currentData.correctAnswer) {
         state.score++;
-        AudioFX.correct(); // Play success chime
+        AudioFX.correct();
     } else {
-        AudioFX.wrong(); // Play error thud
+        AudioFX.wrong();
     }
     
     state.currentQuestionIndex++;
@@ -277,7 +274,6 @@ function evaluateAndProgress() {
     elements.nextBtn.classList.add('hidden');
     
     if (state.currentQuestionIndex < state.activeQuestions.length) {
-        // Small delay to let sound play before switching DOM
         setTimeout(loadQuestion, 400);
     } else {
         setTimeout(endQuiz, 400);
@@ -347,6 +343,75 @@ elements.nextTaskBtn.addEventListener('click', () => {
 elements.restartBtn.addEventListener('click', () => {
     elements.resultScreen.classList.add('hidden');
     elements.startScreen.classList.remove('hidden');
+});
+
+// ==========================================
+// 10. ABOUT & DOCUMENTATION MODAL TOGGLES
+// ==========================================
+const aboutLink = document.getElementById('about-link');
+const aboutModal = document.getElementById('about-modal');
+const closeAbout = document.getElementById('close-about');
+
+const docLink = document.getElementById('documentation-link');
+const docModal = document.getElementById('documentation-modal');
+const closeDoc = document.getElementById('close-doc');
+
+function openModal(modal) {
+    modal.classList.remove('hidden');
+}
+function closeModal(modal) {
+    modal.classList.add('hidden');
+}
+
+aboutLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal(aboutModal);
+});
+docLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal(docModal);
+});
+
+closeAbout.addEventListener('click', () => closeModal(aboutModal));
+closeDoc.addEventListener('click', () => closeModal(docModal));
+
+// Close modals when clicking outside the content
+window.addEventListener('click', (e) => {
+    if (e.target === aboutModal) closeModal(aboutModal);
+    if (e.target === docModal) closeModal(docModal);
+});
+
+// ==========================================
+// 11. DARK/LIGHT MODE TOGGLE
+// ==========================================
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = themeToggle.querySelector('.theme-icon');
+
+function setTheme(isDark) {
+  if (isDark) {
+    document.body.classList.add('dark-mode');
+    themeIcon.textContent = '☀️';
+    localStorage.setItem('synapse-theme', 'dark');
+  } else {
+    document.body.classList.remove('dark-mode');
+    themeIcon.textContent = '🌙';
+    localStorage.setItem('synapse-theme', 'light');
+  }
+}
+
+const savedTheme = localStorage.getItem('synapse-theme');
+if (savedTheme === 'dark') {
+  setTheme(true);
+} else if (savedTheme === 'light') {
+  setTheme(false);
+} else {
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(prefersDark);
+}
+
+themeToggle.addEventListener('click', () => {
+  const isDark = document.body.classList.contains('dark-mode');
+  setTheme(!isDark);
 });
 
 window.addEventListener('DOMContentLoaded', () => {
