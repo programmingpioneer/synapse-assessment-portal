@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNAPSE // Technical Assessment Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-card animate-pop">
+            <div class="modal-header-branding">
+                <h2>⚡ INITIALIZE CANDIDATE PROFILE</h2>
+                <p>Please enter your credentials to activate the evaluation engine.</p>
+            </div>
+            <form id="auth-form" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="user-fullname">Full Name</label>
+                    <input type="text" id="user-fullname" required placeholder="e.g., Sufyan Khan">
+                </div>
+                <div class="form-group">
+                    <label for="user-email">Email Address</label>
+                    <input type="email" id="user-email" required placeholder="candidate@gmail.com">
+                </div>
+                <button type="submit" id="register-btn" class="btn btn-primary">Lock Profile & Launch</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="portal-container">
+        
+        <aside id="profile-sidebar" class="sidebar-panel">
+            <div class="sidebar-sticky">
+                <div class="profile-header">
+                    <div id="avatar-initials" class="avatar">??</div>
+                    <div>
+                        <h3 id="sidebar-name">Candidate Name</h3>
+                        <p id="sidebar-email" class="small-text">candidate@email.com</p>
+                    </div>
+                </div>
+
+                <div class="analytics-section">
+                    <h4>📈 Performance Analytics</h4>
+                    <p class="small-text text-muted mb-2">Real-time vector progress tracking (Pure SVG Architecture):</p>
+                    
+                    <div class="chart-wrapper">
+                        <svg id="analytics-chart" viewBox="0 0 300 150">
+                            <line x1="0" y1="25" x2="300" y2="25" class="chart-grid-line" />
+                            <line x1="0" y1="75" x2="300" y2="75" class="chart-grid-line" />
+                            <line x1="0" y1="125" x2="300" y2="125" class="chart-grid-line" />
+                            <path id="chart-path" d="" fill="none" stroke="#6366f1" stroke-width="3" />
+                            <g id="chart-dots"></g>
+                        </svg>
+                        <div id="chart-placeholder" class="chart-empty-msg">No evaluation data compiled yet.</div>
+                    </div>
+                    
+                    <div class="stats-counter mt-3">
+                        <div class="stat-item">
+                            <span class="stat-label">Total Attempts</span>
+                            <span id="stat-attempts" class="stat-val">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Highest Efficiency</span>
+                            <span id="stat-high" class="stat-val">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="app-header">
+                <h1 class="tech-logo">⚡ SYNAPSE <span class="text-muted">//</span> <span class="text-accent">PORTAL</span></h1>
+                <p class="subtitle">Engineered with pure Vanilla JS & Semantic Web Standards</p>
+            </header>
+
+            <section id="start-screen" class="quiz-card">
+                <h2 id="assignment-title">Loading Module...</h2>
+                <p class="description">
+                    This is an isolated core verification block. The engine evaluates logical execution speeds and accuracy under strict intervals.
+                </p>
+                <div class="rules-box">
+                    <h3>Module Parameters:</h3>
+                    <ul>
+                        <li>Subject Framework: <strong id="meta-subject">Processing...</strong></li>
+                        <li>Volume Matrix: <strong>5 Targeted Questions</strong></li>
+                        <li>Time Velocity: <strong>15 Seconds Per Question</strong></li>
+                    </ul>
+                </div>
+                <button id="start-btn" class="btn btn-primary">Initialize Assessment Matrix</button>
+            </section>
+
+            <section id="quiz-screen" class="quiz-card hidden">
+                <header class="quiz-header">
+                    <div class="question-tracker">
+                        Evaluation Item: <span id="current-question-num" class="text-accent">1</span>/5
+                    </div>
+                    <div class="timer-badge">
+                        ⏱️ <span id="time-left">15</span>s
+                    </div>
+                </header>
+
+                <div class="progress-bar-container">
+                    <div id="timer-progress" class="progress-bar"></div>
+                </div>
+
+                <h2 id="question-text" class="question-text">Querying terminal dataset...</h2>
+
+                <div id="options-container" class="options-grid"></div>
+
+                <footer class="quiz-footer">
+                    <button id="next-btn" class="btn btn-secondary hidden">Commit Response →</button>
+                </footer>
+            </section>
+
+            <section id="result-screen" class="quiz-card hidden text-center">
+                <div class="result-icon">🎯</div>
+                <h2>Evaluation Concluded</h2>
+                <p class="description">Candidate response parameters successfully compiled and mapped to analytics index.</p>
+                
+                <div class="score-grid">
+                    <div class="score-box">
+                        <span class="score-label">Correct Hits</span>
+                        <h3 id="final-score">0</h3>
+                    </div>
+                    <div class="score-box">
+                        <span class="score-label">Efficiency Index</span>
+                        <h3 id="final-percentage" class="text-accent">0%</h3>
+                    </div>
+                </div>
+
+                <p id="performance-feedback" class="feedback-text"></p>
+
+                <div class="action-button-group">
+                    <button id="next-task-btn" class="btn btn-primary hidden">Proceed to Next Assignment ⚡</button>
+                    <button id="restart-btn" class="btn btn-outline">Re-Evaluate Current Module</button>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
