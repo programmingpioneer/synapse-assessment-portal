@@ -51,38 +51,52 @@ const AudioFX = {
 function speakText(text) {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-GB';
+    utterance.lang = 'en-GB'; 
     utterance.rate = 1.05;
     utterance.pitch = 1;
     window.speechSynthesis.speak(utterance);
 }
 
 // ==========================================
-// 4. DOM CACHING
+// 4. DOM CACHING (Strictly Synced with HTML)
 // ==========================================
 const elements = {
+    // Portals & Screens
     authModal: document.getElementById('auth-modal'),
     startScreen: document.getElementById('start-screen'),
     quizScreen: document.getElementById('quiz-screen'),
     resultScreen: document.getElementById('result-screen'),
     profileSidebar: document.getElementById('profile-sidebar'),
+    
+    // Auth Form
     authForm: document.getElementById('auth-form'),
     userNameInput: document.getElementById('user-fullname'),
     userEmailInput: document.getElementById('user-email'),
+    
+    // Profile Identity
     sidebarName: document.getElementById('sidebar-name'),
     sidebarEmail: document.getElementById('sidebar-email'),
     avatarInitials: document.getElementById('avatar-initials'),
+    
+    // Evaluation Meta
     assignmentTitle: document.getElementById('assignment-title'),
     metaSubject: document.getElementById('meta-subject'),
+    
+    // Action Triggers
     startBtn: document.getElementById('start-btn'),
     nextBtn: document.getElementById('next-btn'),
     nextTaskBtn: document.getElementById('next-task-btn'),
     restartBtn: document.getElementById('restart-btn'),
+    readAloudBtn: document.getElementById('read-aloud-btn'),
+    
+    // Quiz Environment
     questionText: document.getElementById('question-text'),
     optionsContainer: document.getElementById('options-container'),
     currentQuestionNum: document.getElementById('current-question-num'),
     timeLeftDisplay: document.getElementById('time-left'),
     timerProgress: document.getElementById('timer-progress'),
+    
+    // Result Matrix
     finalScoreDisplay: document.getElementById('final-score'),
     finalPercentageDisplay: document.getElementById('final-percentage'),
     performanceFeedback: document.getElementById('performance-feedback'),
@@ -91,7 +105,18 @@ const elements = {
     chartPath: document.getElementById('chart-path'),
     chartDots: document.getElementById('chart-dots'),
     chartPlaceholder: document.getElementById('chart-placeholder'),
-    readAloudBtn: document.getElementById('read-aloud-btn')
+
+    // Modals & Nav Elements
+    navAboutLink: document.getElementById('nav-about-link'),
+    navDocLink: document.getElementById('nav-doc-link'),
+    aboutModal: document.getElementById('about-modal'),
+    docModal: document.getElementById('documentation-modal'),
+    closeAboutBtn: document.getElementById('close-about-btn'),
+    closeDocBtn: document.getElementById('close-doc-btn'),
+    themeToggleBtn: document.getElementById('theme-toggle-btn'),
+    themeIcon: document.getElementById('theme-icon'),
+    hamburgerBtn: document.getElementById('hamburger-btn'),
+    navMenu: document.getElementById('nav-menu')
 };
 
 // ==========================================
@@ -309,6 +334,8 @@ function updateAnalytics() {
     if (total === 0) {
         elements.statHigh.textContent = "0%";
         elements.chartPlaceholder.classList.remove('hidden');
+        elements.chartPath.setAttribute('d', '');
+        elements.chartDots.innerHTML = '';
         return;
     }
     const highest = Math.max(...state.history.map(item => item.scorePercentage));
@@ -333,6 +360,12 @@ function updateAnalytics() {
     elements.chartPath.setAttribute("d", pathData);
 }
 
+// ✅ RESPONSIVE CHART – Re-draw on window resize (e.g., mobile rotate)
+window.addEventListener('resize', () => {
+    clearTimeout(window._resizeTimer);
+    window._resizeTimer = setTimeout(updateAnalytics, 150);
+});
+
 elements.nextTaskBtn.addEventListener('click', () => {
     state.assignmentCount++;
     elements.resultScreen.classList.add('hidden');
@@ -346,74 +379,111 @@ elements.restartBtn.addEventListener('click', () => {
 });
 
 // ==========================================
-// 10. ABOUT & DOCUMENTATION MODAL TOGGLES
+// 10. NAV MODALS (Corrected Logic)
 // ==========================================
-const aboutLink = document.getElementById('about-link');
-const aboutModal = document.getElementById('about-modal');
-const closeAbout = document.getElementById('close-about');
+function openModal(modal) { modal.classList.remove('hidden'); }
+function closeModal(modal) { modal.classList.add('hidden'); }
 
-const docLink = document.getElementById('documentation-link');
-const docModal = document.getElementById('documentation-modal');
-const closeDoc = document.getElementById('close-doc');
-
-function openModal(modal) {
-    modal.classList.remove('hidden');
-}
-function closeModal(modal) {
-    modal.classList.add('hidden');
-}
-
-aboutLink.addEventListener('click', (e) => {
+elements.navAboutLink.addEventListener('click', (e) => {
     e.preventDefault();
-    openModal(aboutModal);
+    openModal(elements.aboutModal);
 });
-docLink.addEventListener('click', (e) => {
+elements.navDocLink.addEventListener('click', (e) => {
     e.preventDefault();
-    openModal(docModal);
+    openModal(elements.docModal);
 });
 
-closeAbout.addEventListener('click', () => closeModal(aboutModal));
-closeDoc.addEventListener('click', () => closeModal(docModal));
+elements.closeAboutBtn.addEventListener('click', () => closeModal(elements.aboutModal));
+elements.closeDocBtn.addEventListener('click', () => closeModal(elements.docModal));
 
-// Close modals when clicking outside the content
+// Close modals when clicking outside the content block
 window.addEventListener('click', (e) => {
-    if (e.target === aboutModal) closeModal(aboutModal);
-    if (e.target === docModal) closeModal(docModal);
+    if (e.target === elements.aboutModal) closeModal(elements.aboutModal);
+    if (e.target === elements.docModal) closeModal(elements.docModal);
 });
 
 // ==========================================
-// 11. DARK/LIGHT MODE TOGGLE
+// 11. DARK/LIGHT MODE TOGGLE (Persistent)
 // ==========================================
-const themeToggle = document.getElementById('theme-toggle');
-const themeIcon = themeToggle.querySelector('.theme-icon');
-
 function setTheme(isDark) {
-  if (isDark) {
-    document.body.classList.add('dark-mode');
-    themeIcon.textContent = '☀️';
-    localStorage.setItem('synapse-theme', 'dark');
-  } else {
-    document.body.classList.remove('dark-mode');
-    themeIcon.textContent = '🌙';
-    localStorage.setItem('synapse-theme', 'light');
-  }
+    if (isDark) {
+        document.body.classList.add('dark-mode');
+        elements.themeIcon.textContent = '☀️';
+        localStorage.setItem('synapse-theme', 'dark');
+    } else {
+        document.body.classList.remove('dark-mode');
+        elements.themeIcon.textContent = '🌙';
+        localStorage.setItem('synapse-theme', 'light');
+    }
 }
 
 const savedTheme = localStorage.getItem('synapse-theme');
 if (savedTheme === 'dark') {
-  setTheme(true);
+    setTheme(true);
 } else if (savedTheme === 'light') {
-  setTheme(false);
+    setTheme(false);
 } else {
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  setTheme(prefersDark);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(prefersDark);
 }
 
-themeToggle.addEventListener('click', () => {
-  const isDark = document.body.classList.contains('dark-mode');
-  setTheme(!isDark);
+elements.themeToggleBtn.addEventListener('click', () => {
+    const isDark = document.body.classList.contains('dark-mode');
+    setTheme(!isDark);
 });
 
+// ==========================================
+// 12. A11Y KEYBOARD MATRIX (Hardcore Flex)
+// ==========================================
+window.addEventListener('keydown', (e) => {
+    if (elements.quizScreen.classList.contains('hidden')) return;
+
+    const keyMap = {
+        'a': 0, 'A': 0,
+        'b': 1, 'B': 1,
+        'c': 2, 'C': 2,
+        'd': 3, 'D': 3
+    };
+
+    if (e.key in keyMap) {
+        const options = elements.optionsContainer.children;
+        const indexToSelect = keyMap[e.key];
+        if (options[indexToSelect]) {
+            options[indexToSelect].click();
+        }
+    }
+
+    if (e.key === 'Enter') {
+        if (!elements.nextBtn.classList.contains('hidden')) {
+            elements.nextBtn.click();
+        }
+    }
+});
+
+// ==========================================
+// 13. MOBILE HAMBURGER MENU LOGIC
+// ==========================================
+elements.hamburgerBtn.addEventListener('click', () => {
+    elements.navMenu.classList.toggle('active');
+    
+    if (elements.navMenu.classList.contains('active')) {
+        elements.hamburgerBtn.textContent = '✖';
+    } else {
+        elements.hamburgerBtn.textContent = '☰';
+    }
+});
+
+function closeMobileMenu() {
+    elements.navMenu.classList.remove('active');
+    elements.hamburgerBtn.textContent = '☰';
+}
+
+elements.navAboutLink.addEventListener('click', closeMobileMenu);
+elements.navDocLink.addEventListener('click', closeMobileMenu);
+
+// ==========================================
+// 14. LIFECYCLE BOOT
+// ==========================================
 window.addEventListener('DOMContentLoaded', () => {
     state.history = [];
     state.assignmentCount = 1;

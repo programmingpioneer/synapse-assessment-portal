@@ -5,100 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SYNAPSE // Technical Assessment Portal</title>
 
-    <!-- Bootstrap 5 CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Font (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Custom Stylesheet -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ⚡ PREMIUM NAVBAR ⚡ -->
-    <nav class="navbar navbar-expand-lg fixed-top premium-navbar" id="mainNavbar">
-        <div class="container-fluid px-4">
-            <!-- Brand -->
-            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+    <nav class="premium-navbar">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; width: 100%; position: relative;">
+            
+            <div class="navbar-brand" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
                 <span class="brand-icon">⚡</span>
-                <span class="brand-text">SYNAPSE</span>
+                <strong style="font-weight: 800;">SYNAPSE</strong>
                 <span class="brand-divider">|</span>
                 <span class="brand-sub">Portal</span>
-            </a>
+            </div>
 
-            <!-- Toggler -->
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Nav Items -->
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center gap-1">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-semibold px-3" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">Features</a>
-                        <ul class="dropdown-menu dropdown-menu-dark animate-dropdown">
-                            <li><a class="dropdown-item" href="#">📊 Analytics</a></li>
-                            <li><a class="dropdown-item" href="#">🧠 Skill Matrix</a></li>
-                            <li><a class="dropdown-item" href="#">📚 Learning Paths</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">🔬 Sandbox</a></li>
-                        </ul>
-                    </li>
-                    <!-- About link (replaced Pricing) -->
-                    <li class="nav-item">
-                        <a class="nav-link fw-semibold px-3" href="#" id="about-link">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-semibold px-3" href="#" id="documentation-link">Documentation</a>
-                    </li>
-                </ul>
-
-                <!-- Right side: Theme Toggle only -->
-                <div class="d-flex align-items-center gap-3">
-                    <button id="theme-toggle"
-                            class="btn btn-theme rounded-circle d-flex align-items-center justify-content-center"
-                            title="Toggle Dark/Light Mode">
-                        <span class="theme-icon">🌙</span>
-                    </button>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                
+                <div id="nav-menu" class="nav-menu">
+                    <a href="#" id="nav-about-link" class="nav-link" style="text-decoration: none; font-weight: 600;">About</a>
+                    <a href="#" id="nav-doc-link" class="nav-link" style="text-decoration: none; font-weight: 600;">Documentation</a>
                 </div>
+                
+                <button id="theme-toggle-btn" class="btn-theme" style="border-radius: 50%; cursor: pointer;" title="Toggle Dark/Light Mode">
+                    <span id="theme-icon" class="theme-icon">🌙</span>
+                </button>
+
+                <button id="hamburger-btn" class="hamburger-btn" aria-label="Menu">☰</button>
             </div>
         </div>
     </nav>
 
-    <!-- ========== ABOUT MODAL ========== -->
     <div id="about-modal" class="modal-overlay hidden">
-        <div class="modal-card about-card animate-pop">
-            <span class="modal-close" id="close-about">&times;</span>
+        <div class="modal-card about-card animate-pop" style="position: relative;">
+            <span class="modal-close" id="close-about-btn">&times;</span>
             <div class="modal-header-branding">
                 <h2>⚡ About SYNAPSE</h2>
-                <p>The next‑gen technical evaluation engine</p>
+                <p>The next-gen technical evaluation engine.</p>
             </div>
 
             <div class="about-content">
                 <div class="about-dev">
-            <img src="sufyan.png"
-                         alt="Developer Avatar" class="dev-avatar">
+                    <img src="statics/sufyan.png" alt="Developer Avatar" class="dev-avatar">
                     <div>
-                        <h3>Sufyan Khan</h3>
+                        <h3 style="margin-bottom: 0;">Sufyan Khan</h3>
                         <span class="dev-role">FSC Student & Aspiring Software Engineer</span>
                         <p class="dev-bio">
                             I'm currently an FSC student with a deep interest in coding and web technologies.
                             This SYNAPSE portal is a personal project built from scratch using HTML, CSS, and JavaScript.
                             It's my step towards becoming a software engineer — no fancy frameworks, just pure learning.
                         </p>
-                        <!-- Social Links -->
                         <div class="social-links">
-                            <a href="https://github.com/programmingpioneer" target="_blank" class="social-link" title="GitHub">
-                                🔗 GitHub
-                            </a>
-                            <a href="https://linkedin.com/in/sufyan-khans" target="_blank" class="social-link" title="LinkedIn">
-                                💼 LinkedIn
-                            </a>
-                            <a href="https://programmingpioneer.github.io/sufyan-portfolio/" target="_blank" class="social-link" title="Portfolio">
-                                🌐 Portfolio
-                            </a>
+                            <a href="https://github.com/programmingpioneer" target="_blank" class="social-link">🔗 GitHub</a>
+                            <a href="https://linkedin.com/in/sufyan-khans" target="_blank" class="social-link">💼 LinkedIn</a>
+                            <a href="https://programmingpioneer.github.io/sufyan-portfolio/" target="_blank" class="social-link">🌐 Portfolio</a>
                         </div>
                     </div>
                 </div>
@@ -107,53 +68,51 @@
                     <h4>🎯 Project Mission</h4>
                     <p>
                         To create a clean, functional assessment portal that demonstrates real-world JavaScript concepts
-                        like API calls, timers, and DOM manipulation — all while keeping the code readable and beginner-friendly.
+                        like API calls, timers, procedural audio, and DOM manipulation — all while keeping the code scalable.
                     </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ========== DOCUMENTATION MODAL ========== -->
     <div id="documentation-modal" class="modal-overlay hidden">
-        <div class="modal-card doc-card animate-pop">
-            <span class="modal-close" id="close-doc">&times;</span>
+        <div class="modal-card doc-card animate-pop" style="position: relative;">
+            <span class="modal-close" id="close-doc-btn">&times;</span>
             <div class="modal-header-branding">
                 <h2>📚 Documentation</h2>
-                <p>Master the evaluation engine</p>
+                <p>Master the evaluation engine mechanics.</p>
             </div>
 
             <div class="doc-grid">
                 <div class="doc-item">
                     <span class="doc-icon">🧠</span>
-                    <h4>Smart Questions</h4>
-                    <p>All questions are fetched live from Open Trivia DB and randomised per assignment.</p>
+                    <h4>Smart Engine</h4>
+                    <p>Questions are fetched live asynchronously from OpenTDB and randomised securely.</p>
                 </div>
                 <div class="doc-item">
                     <span class="doc-icon">🎙️</span>
                     <h4>Read Aloud</h4>
-                    <p>Built‑in text‑to‑speech engine reads out questions and options with British clarity.</p>
+                    <p>Built-in Text-to-Speech API reads out questions natively without external dependencies.</p>
                 </div>
                 <div class="doc-item">
                     <span class="doc-icon">⏱️</span>
-                    <h4>Precision Timer</h4>
-                    <p>Drift‑free countdown with audio ticks in the last 5 seconds. No dependency on setInterval drift.</p>
+                    <h4>Drift-Free Timer</h4>
+                    <p>Precision clock syncs with Date.now() preventing background JS throttling lag.</p>
                 </div>
                 <div class="doc-item">
                     <span class="doc-icon">📈</span>
-                    <h4>Live Analytics</h4>
-                    <p>Your performance is plotted on a pure SVG chart that updates after every evaluation.</p>
+                    <h4>Pure Analytics</h4>
+                    <p>Performance plotted natively using procedural SVG vector generation math.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Auth Modal (unchanged) -->
     <div id="auth-modal" class="modal-overlay">
         <div class="modal-card animate-pop">
             <div class="modal-header-branding">
-                <h2>⚡ INITIALIZE CANDIDATE PROFILE</h2>
-                <p>Please enter your credentials to activate the evaluation engine.</p>
+                <h2>⚡ INITIALIZE PROFILE</h2>
+                <p>Enter your credentials to activate the engine.</p>
             </div>
             <form id="auth-form" onsubmit="return false;">
                 <div class="form-group">
@@ -162,37 +121,36 @@
                 </div>
                 <div class="form-group">
                     <label for="user-email">Email Address</label>
-                    <input type="email" id="user-email" required placeholder="candidate@gmail.com">
+                    <input type="email" id="user-email" required placeholder="candidate@email.com">
                 </div>
                 <button type="submit" id="register-btn" class="btn btn-primary">Lock Profile & Launch</button>
             </form>
         </div>
     </div>
 
-    <!-- Main Portal Layout (unchanged) -->
     <div class="portal-container">
-        <!-- Sidebar (unchanged) -->
         <aside id="profile-sidebar" class="sidebar-panel">
             <div class="sidebar-sticky">
                 <div class="profile-header">
                     <div id="avatar-initials" class="avatar">??</div>
                     <div>
-                        <h3 id="sidebar-name">Candidate Name</h3>
-                        <p id="sidebar-email" class="small-text">candidate@email.com</p>
+                        <h3 id="sidebar-name">Candidate</h3>
+                        <p id="sidebar-email" class="small-text text-muted" style="font-size: 0.85rem;">email@address.com</p>
                     </div>
                 </div>
                 <div class="analytics-section">
                     <h4>📈 Performance Analytics</h4>
-                    <p class="small-text text-muted mb-2">Real-time vector progress tracking (Pure SVG Architecture):</p>
+                    <p class="small-text text-muted mb-2" style="font-size: 0.8rem;">Real-time vector tracking:</p>
                     <div class="chart-wrapper">
-                        <svg id="analytics-chart" viewBox="0 0 300 150">
+                        <!-- SVG ab responsive hai – width:100% ke saath -->
+                        <svg id="analytics-chart" viewBox="0 0 300 150" style="width:100%;height:auto;">
                             <line x1="0" y1="25" x2="300" y2="25" class="chart-grid-line" />
                             <line x1="0" y1="75" x2="300" y2="75" class="chart-grid-line" />
                             <line x1="0" y1="125" x2="300" y2="125" class="chart-grid-line" />
                             <path id="chart-path" d="" fill="none" stroke="#6366f1" stroke-width="3" />
                             <g id="chart-dots"></g>
                         </svg>
-                        <div id="chart-placeholder" class="chart-empty-msg">No evaluation data compiled yet.</div>
+                        <div id="chart-placeholder" class="chart-empty-msg">No data compiled.</div>
                     </div>
                     <div class="stats-counter mt-3">
                         <div class="stat-item">
@@ -200,7 +158,7 @@
                             <span id="stat-attempts" class="stat-val">0</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-label">Highest Efficiency</span>
+                            <span class="stat-label">Highest</span>
                             <span id="stat-high" class="stat-val">0%</span>
                         </div>
                     </div>
@@ -210,19 +168,19 @@
 
         <main class="main-content">
             <header class="app-header">
-                <h1 class="tech-logo">⚡ SYNAPSE <span class="text-muted">//</span> <span class="text-accent">PORTAL</span></h1>
-                <p class="subtitle">Engineered with pure Vanilla JS & Semantic Web Standards</p>
+                <h1 class="tech-logo">⚡ SYNAPSE <span class="text-accent">PORTAL</span></h1>
+                <p class="subtitle">Engineered with pure Vanilla JS & Web Audio</p>
             </header>
 
             <section id="start-screen" class="quiz-card">
                 <h2 id="assignment-title">Loading Module...</h2>
-                <p class="description">This is an isolated core verification block. The engine evaluates logical execution speeds and accuracy under strict intervals.</p>
+                <p class="description">Core verification block. Evaluates logical execution under strict intervals.</p>
                 <div class="rules-box">
                     <h3>Module Parameters:</h3>
                     <ul>
-                        <li>Subject Framework: <strong id="meta-subject">Processing...</strong></li>
-                        <li>Volume Matrix: <strong>5 Targeted Questions</strong></li>
-                        <li>Time Velocity: <strong>15 Seconds Per Question</strong></li>
+                        <li>Subject: <strong id="meta-subject">Processing...</strong></li>
+                        <li>Format: <strong>5 Targeted Questions</strong></li>
+                        <li>Timer: <strong>15 Seconds Per Item</strong></li>
                     </ul>
                 </div>
                 <button id="start-btn" class="btn btn-primary">Initialize Assessment Matrix</button>
@@ -231,7 +189,7 @@
             <section id="quiz-screen" class="quiz-card hidden">
                 <header class="quiz-header">
                     <div class="question-tracker">
-                        Module Status: <span id="current-question-num" class="text-accent">1</span>/5
+                        Status: <span id="current-question-num" class="text-accent">1</span>/5
                     </div>
                     <button id="read-aloud-btn" class="btn-icon" title="Listen to Question">🔊 Read Aloud</button>
                     <div class="timer-badge">⏱️ <span id="time-left">15</span>s</div>
@@ -239,7 +197,7 @@
                 <div class="progress-bar-container">
                     <div id="timer-progress" class="progress-bar"></div>
                 </div>
-                <h2 id="question-text" class="question-text">Querying terminal dataset...</h2>
+                <h2 id="question-text" class="question-text">Querying dataset...</h2>
                 <div id="options-container" class="options-grid"></div>
                 <footer class="quiz-footer">
                     <button id="next-btn" class="btn btn-secondary hidden">Commit Response →</button>
@@ -249,7 +207,6 @@
             <section id="result-screen" class="quiz-card hidden text-center">
                 <div class="result-icon">🎯</div>
                 <h2>Evaluation Concluded</h2>
-                <p class="description">Candidate response parameters successfully compiled and mapped to analytics index.</p>
                 <div class="score-grid">
                     <div class="score-box">
                         <span class="score-label">Correct Hits</span>
@@ -262,16 +219,13 @@
                 </div>
                 <p id="performance-feedback" class="feedback-text"></p>
                 <div class="action-button-group">
-                    <button id="next-task-btn" class="btn btn-primary hidden">Proceed to Next Assignment ⚡</button>
-                    <button id="restart-btn" class="btn btn-outline">Re-Evaluate Current Module</button>
+                    <button id="next-task-btn" class="btn btn-primary hidden">Next Assignment ⚡</button>
+                    <button id="restart-btn" class="btn btn-outline">Re-Evaluate</button>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom App Script -->
     <script src="app.js"></script>
 </body>
 </html>
