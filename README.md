@@ -1,4 +1,3 @@
-
 <div align="center">
   <br>
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=120&section=header&text=⚡%20SYNAPSE%20Portal&fontSize=40&fontAlignY=35&fontColor=ffffff&animation=fadeIn" />
@@ -23,54 +22,167 @@
 
 ## 📋 Table of Contents
 - [✨ Features](#-features)
+- [🧠 How It Works](#-how-it-works)
 - [📸 Live Preview](#-live-preview)
 - [🧰 Tech Stack](#-tech-stack)
 - [🚀 Getting Started](#-getting-started)
 - [🌍 Deployment](#-deployment)
-- [📄 License](#-license)
+- [🚀 Upcoming Features](#-upcoming-features-roadmap)
 - [🙏 Acknowledgments](#-acknowledgments)
-- [👤 Developer Profile](#-About the Developer)
+- [👤 About the Developer](#-about-the-developer)
+- [📄 License](#-license)
 
 ---
 
 ## ✨ Features
 
-| Category         | Highlights |
-|------------------|------------|
-| 🧠 **Quiz Engine** | Dynamic questions fetched from [Open Trivia DB](https://opentdb.com/). 5 random CS‑focused items per session. |
-| ⏱️ **Precision Timer** | Drift‑free countdown (15s) with audible ticks in the last 5 seconds. Auto‑submits on timeout. |
-| 🔊 **Read Aloud** | Click a button to hear the question and all four options read out using the Web Speech API (British accent). |
-| 📊 **Analytics** | Pure SVG chart visualises your score history. Hover effects and real‑time updates. |
-| 🌓 **Dark / Light Mode** | Full theme toggle that persists via `localStorage`. Works across all modals and components. |
-| 💎 **Premium UI** | Glassmorphism navbar, animated modals, staggered option cards, and smooth micro‑interactions. |
-| 📱 **Responsive** | Fully functional on mobile, tablet, and desktop. Adaptive grid layout. |
-| 🔗 **Social Links** | About modal includes GitHub, LinkedIn, and Portfolio buttons (customisable). |
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+
+  <div style="background: linear-gradient(145deg, #1e1e2f, #2a2a40); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(108,92,231,0.2); transition: transform 0.2s; border: 1px solid rgba(108,92,231,0.3);">
+    <h3 style="color: #a29bfe; margin-top:0;">🧠 Quiz Engine</h3>
+    <p style="color: #e0e0e0; font-size: 14px; line-height: 1.5;">Dynamic questions from Open Trivia DB. 5 random CS‑focused items per session. No two runs feel the same.</p>
+  </div>
+
+  <div style="background: linear-gradient(145deg, #1e1e2f, #2a2a40); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,206,201,0.2); transition: transform 0.2s; border: 1px solid rgba(0,206,201,0.3);">
+    <h3 style="color: #00cec9; margin-top:0;">⏱️ Precision Timer</h3>
+    <p style="color: #e0e0e0; font-size: 14px; line-height: 1.5;">Drift‑free 15s countdown. Audible tick in the last 5 seconds. Auto‑submits on timeout — no mercy!</p>
+  </div>
+
+  <div style="background: linear-gradient(145deg, #1e1e2f, #2a2a40); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(253,121,168,0.2); transition: transform 0.2s; border: 1px solid rgba(253,121,168,0.3);">
+    <h3 style="color: #fd79a8; margin-top:0;">🔊 Read Aloud</h3>
+    <p style="color: #e0e0e0; font-size: 14px; line-height: 1.5;">One click reads question + all 4 options. Uses Web Speech API with a British accent. Accessibility win.</p>
+  </div>
+
+  <div style="background: linear-gradient(145deg, #1e1e2f, #2a2a40); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(85,239,196,0.2); transition: transform 0.2s; border: 1px solid rgba(85,239,196,0.3);">
+    <h3 style="color: #55efc4; margin-top:0;">📊 Analytics</h3>
+    <p style="color: #e0e0e0; font-size: 14px; line-height: 1.5;">Pure SVG chart paints your score history. Hover effects, glowing dots, and real‑time updates — no chart library.</p>
+  </div>
+
+  <div style="background: linear-gradient(145deg, #1e1e2f, #2a2a40); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(255,234,167,0.2); transition: transform 0.2s; border: 1px solid rgba(255,234,167,0.3);">
+    <h3 style="color: #ffeaa7; margin-top:0;">🌓 Dark / Light Mode</h3>
+    <p style="color: #e0e0e0; font-size: 14px; line-height: 1.5;">Full theme toggle that sticks via localStorage. Modals, cards, and SVGs all obey your preference.</p>
+  </div>
+
+  <div style="background: linear-gradient(145deg, #1e1e2f, #2a2a40); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(225,112,85,0.2); transition: transform 0.2s; border: 1px solid rgba(225,112,85,0.3);">
+    <h3 style="color: #e17055; margin-top:0;">💎 Premium UI</h3>
+    <p style="color: #e0e0e0; font-size: 14px; line-height: 1.5;">Glassmorphism navbar, animated modals, staggered option cards, and micro‑interactions everywhere.</p>
+  </div>
+
+  <div style="background: linear-gradient(145deg, #1e1e2f, #2a2a40); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(108,92,231,0.2); transition: transform 0.2s; border: 1px solid rgba(108,92,231,0.3);">
+    <h3 style="color: #a29bfe; margin-top:0;">📱 Responsive</h3>
+    <p style="color: #e0e0e0; font-size: 14px; line-height: 1.5;">Flawless on mobile, tablet, and desktop. Adaptive grid that respects every screen.</p>
+  </div>
+
+  <div style="background: linear-gradient(145deg, #1e1e2f, #2a2a40); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,206,201,0.2); transition: transform 0.2s; border: 1px solid rgba(0,206,201,0.3);">
+    <h3 style="color: #00cec9; margin-top:0;">🔗 Social Links</h3>
+    <p style="color: #e0e0e0; font-size: 14px; line-height: 1.5;">About modal packs GitHub, LinkedIn, and Portfolio buttons — fully customisable for your brand.</p>
+  </div>
+
+</div>
+
+---
+
+## 🧠 How It Works
+
+<div style="display: flex; flex-direction: column; gap: 30px; margin: 30px 0;">
+
+  <!-- Step 1 -->
+  <div style="display: flex; align-items: flex-start; gap: 20px;">
+    <div style="min-width: 50px; height: 50px; background: linear-gradient(135deg, #6c5ce7, #a29bfe); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px; box-shadow: 0 6px 18px rgba(108,92,231,0.5);">1</div>
+    <div style="background: rgba(108,92,231,0.08); border-radius: 16px; padding: 16px; flex: 1; border-left: 4px solid #6c5ce7;">
+      <strong style="color: #a29bfe; font-size: 16px;">📡 Fetch Questions</strong><br>
+      <span style="color: #cfcfcf;">The app pulls 5 random Computer Science questions from Open Trivia DB on page load.</span>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div style="display: flex; align-items: flex-start; gap: 20px;">
+    <div style="min-width: 50px; height: 50px; background: linear-gradient(135deg, #00cec9, #81ecec); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px; box-shadow: 0 6px 18px rgba(0,206,201,0.5);">2</div>
+    <div style="background: rgba(0,206,201,0.08); border-radius: 16px; padding: 16px; flex: 1; border-left: 4px solid #00cec9;">
+      <strong style="color: #81ecec; font-size: 16px;">🖼️ Render Quiz Interface</strong><br>
+      <span style="color: #cfcfcf;">Question + 4 option cards slide in with staggered animation. Timer begins immediately.</span>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div style="display: flex; align-items: flex-start; gap: 20px;">
+    <div style="min-width: 50px; height: 50px; background: linear-gradient(135deg, #fd79a8, #e84393); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px; box-shadow: 0 6px 18px rgba(253,121,168,0.5);">3</div>
+    <div style="background: rgba(253,121,168,0.08); border-radius: 16px; padding: 16px; flex: 1; border-left: 4px solid #fd79a8;">
+      <strong style="color: #e84393; font-size: 16px;">🎯 Choose an Answer</strong><br>
+      <span style="color: #cfcfcf;">Click any option — or let the timer run out for auto‑submit. Feedback appears instantly.</span>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div style="display: flex; align-items: flex-start; gap: 20px;">
+    <div style="min-width: 50px; height: 50px; background: linear-gradient(135deg, #ffeaa7, #fdcb6e); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px; box-shadow: 0 6px 18px rgba(253,203,110,0.5);">4</div>
+    <div style="background: rgba(253,203,110,0.08); border-radius: 16px; padding: 16px; flex: 1; border-left: 4px solid #fdcb6e;">
+      <strong style="color: #fdcb6e; font-size: 16px;">📊 Update Score & Chart</strong><br>
+      <span style="color: #cfcfcf;">Correct answer? Score goes up. Wrong? No points. SVG chart redraws after every question.</span>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div style="display: flex; align-items: flex-start; gap: 20px;">
+    <div style="min-width: 50px; height: 50px; background: linear-gradient(135deg, #55efc4, #00b894); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px; box-shadow: 0 6px 18px rgba(85,239,196,0.5);">5</div>
+    <div style="background: rgba(85,239,196,0.08); border-radius: 16px; padding: 16px; flex: 1; border-left: 4px solid #55efc4;">
+      <strong style="color: #55efc4; font-size: 16px;">🏁 End Screen & History</strong><br>
+      <span style="color: #cfcfcf;">After 5 questions, see your final score. Your history is stored locally and shown as a trend.</span>
+    </div>
+  </div>
+
+</div>
 
 ---
 
 ## 📸 Live Preview
 
-<div align="center">
-  <table>
-    <tr>
-      <td><strong>🌞 Light Mode</strong></td>
-      <td><strong>🌙 Dark Mode</strong></td>
-    </tr>
-    <tr>
-      <td><img src="statics/Dashboard-light.png" width="400" alt="Light mode"/></td>
-      <td><img src="statics/Dashboard.png" width="400" alt="Dark mode"/></td>
-    </tr>
-    <tr>
-      <td><strong>📝 Quiz Session</strong></td>
-      <td><strong>🎯 Results & Analytics</strong></td>
-    </tr>
-    <tr>
-      <td><img src="statics/Quiztime.png" width="400" alt="Quiz"/></td>
-      <td><img src="statics/Reslut.png" width="400" alt="Results"/></td>
-    </tr>
-  </table>
-  <p><em>(Actual screenshots in <code>statics/</code> folder)</em></p>
-</div>
+<details>
+<summary><strong>📖 Essay Introduction (click to expand)</strong></summary>
+
+*Synapse is more than a note‑taking app. It is a quiet rebellion against the rigidity of folders, a love letter to the way your mind actually moves — leaping, looping, connecting fragments across time and discipline. What if your second brain didn’t just store knowledge, but actively helped you grow it? This is the question Synapse dares to answer.*
+
+</details>
+
+---
+
+### Dashboard & Daily Workflow
+
+**1. Main Dashboard – Overview of Your Second Brain**  
+<a href="assets/screenshots/dashboard.png" target="_blank">
+  <button style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); border: none; color: white; padding: 10px 22px; text-align: center; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 14px rgba(108, 92, 231, 0.4); transition: all 0.2s ease;"
+          onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(108, 92, 231, 0.6)';"
+          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 14px rgba(108, 92, 231, 0.4)';">
+    🔍 View Full Image
+  </button>
+</a>
+
+**2. Note Editor – Writing with Linked References**  
+<a href="assets/screenshots/editor.png" target="_blank">
+  <button style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); border: none; color: white; padding: 10px 22px; text-align: center; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 14px rgba(108, 92, 231, 0.4); transition: all 0.2s ease;"
+          onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(108, 92, 231, 0.6)';"
+          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 14px rgba(108, 92, 231, 0.4)';">
+    🔍 View Full Image
+  </button>
+</a>
+
+**3. Graph View – Visualizing Your Knowledge Web**  
+<a href="assets/screenshots/graph.png" target="_blank">
+  <button style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); border: none; color: white; padding: 10px 22px; text-align: center; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 14px rgba(108, 92, 231, 0.4); transition: all 0.2s ease;"
+          onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(108, 92, 231, 0.6)';"
+          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 14px rgba(108, 92, 231, 0.4)';">
+    🔍 View Full Image
+  </button>
+</a>
+
+**4. Daily Note – Journal & Task Tracking**  
+<a href="assets/screenshots/daily-note.png" target="_blank">
+  <button style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); border: none; color: white; padding: 10px 22px; text-align: center; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 14px rgba(108, 92, 231, 0.4); transition: all 0.2s ease;"
+          onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(108, 92, 231, 0.6)';"
+          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 14px rgba(108, 92, 231, 0.4)';">
+    🔍 View Full Image
+  </button>
+</a>
 
 ---
 
@@ -87,43 +199,6 @@
 | **Deployment** | Render (static site) |
 
 ---
-## 🙏 Acknowledgments
-<table> <tr> <td align="center"> <a href="https://opentdb.com/"><img src="https://img.shields.io/badge/Open_Trivia_DB-4285F4?style=for-the-badge&logo=quizlet&logoColor=white"></a><br>Free trivia API </td> <td align="center"> <a href="https://ui-avatars.com/"><img src="https://img.shields.io/badge/UI_Avatars-4f46e5?style=for-the-badge&logo=avatar&logoColor=white"></a><br>Instant avatars </td> <td align="center"> <a href="https://getbootstrap.com/"><img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white"></a><br>Navbar component </td> </tr> <tr> <td align="center"> <a href="https://fonts.google.com/"><img src="https://img.shields.io/badge/Google_Fonts-4285F4?style=for-the-badge&logo=googlefonts&logoColor=white"></a><br>Typefaces </td> <td align="center"> <a href="https://render.com/"><img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white"></a><br>Static hosting </td> <td align="center"> <img src="https://img.shields.io/badge/Open_Source-❤️-ff69b4?style=for-the-badge"><br>Community love </td> </tr> </table>
-
----
-
-## 🚀 Deployment
-
- Deploy Your Own Instance
-1. **Push** the code to a GitHub repository.
-2. Create a new **Static Site** on [Render](https://render.com).
-3. Configure:
-   - **Build Command:** *leave blank*
-   - **Publish Directory:** `.`
-4. Click **Create Static Site** – it’s live in seconds 🎉
-
-> Also compatible with:  
-> ![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=flat-square&logo=netlify&logoColor=white) 
-> ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white) 
-> ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=githubpages&logoColor=white)
-
----
-## 🚀 Upcoming Features (Roadmap)
-
-I'm continuously improving this portal. Here's what's planned:
-
-- [ ] **User Accounts** – Let candidates save their history and resume later.
-- [ ] **Custom Question Sets** – Allow examiners to upload their own questions.
-- [ ] **Detailed Analytics Export** – Download performance reports as PDF.
-- [ ] **Sound Themes** – Choose different tick/feedback sounds.
-- [ ] **Multi‑language Support** – Read aloud in Hindi, Urdu, and more.
-- [ ] **Leaderboard** – Compare scores with other candidates (mock).
-
-*These additions will transform SYNAPSE from a personal lab into a fully‑fledged assessment platform.*
----
-## 👤 About the Developer
-<div align="center"> <img src="statics/sufyan.png" alt="Sufyan Khan" width="100" style="border-radius:50%; border:3px solid #4f46e5;"/> <h3>Sufyan Khan</h3> <p> <strong>FSC Student & Aspiring Software Engineer</strong><br> <em>"I'm learning by building. This portal is my personal lab to master the web without frameworks — every line of code brings me closer to becoming a professional engineer."</em> </p> <p> <a href="https://github.com/sufyankhan"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github"/></a> <a href="https://linkedin.com/in/sufyankhan"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin"/></a> <a href="https://yourportfolio.com"><img src="https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=google-chrome"/></a> </p> </div>
-<p align="center">Made with ❤️ and a keyboard full of curiosity.</p>
 
 ## 🚀 Getting Started
 
